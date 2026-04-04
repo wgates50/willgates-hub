@@ -8,8 +8,6 @@ import {
   getCredentials,
   saveChallenge,
 } from "@/lib/passkey"
-import { v4 as randomId } from "crypto"
-
 export async function POST() {
   const session = await getServerSession(authOptions)
   if (!session?.user?.email) {
@@ -26,7 +24,7 @@ export async function POST() {
     userDisplayName: session.user.name || "Will",
     attestationType: "none",
     excludeCredentials: existingCreds.map((c) => ({
-      id: Buffer.from(c.credentialID, "base64url"),
+      id: c.credentialID,
       transports: c.transports,
     })),
     authenticatorSelection: {

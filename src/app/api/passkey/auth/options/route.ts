@@ -9,7 +9,7 @@ export async function POST() {
   const options = await generateAuthenticationOptions({
     rpID,
     allowCredentials: credentials.map((c) => ({
-      id: Buffer.from(c.credentialID, "base64url"),
+      id: c.credentialID,
       transports: c.transports,
     })),
     userVerification: "preferred",
