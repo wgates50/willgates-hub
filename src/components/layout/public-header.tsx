@@ -30,7 +30,7 @@ export function PublicHeader() {
       const { options, sessionId } = await optRes.json()
 
       // Trigger Touch ID / platform authenticator
-      const credential = await startAuthentication({ optionsJSON: options })
+      const credential = await startAuthentication(options)
 
       // Verify with server
       const verifyRes = await fetch("/api/passkey/auth/verify", {

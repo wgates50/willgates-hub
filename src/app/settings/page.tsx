@@ -38,7 +38,7 @@ export default function SettingsPage() {
       if (!optRes.ok) throw new Error("Failed to get options")
       const { options, sessionId } = await optRes.json()
 
-      const credential = await startRegistration({ optionsJSON: options })
+      const credential = await startRegistration(options)
 
       const verifyRes = await fetch("/api/passkey/register/verify", {
         method: "POST",
