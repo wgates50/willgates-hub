@@ -35,12 +35,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Verification failed" }, { status: 400 })
     }
 
-    const { credential: regCred } = verification.registrationInfo
+    const regInfo = verification.registrationInfo
 
     const newCred: StoredCredential = {
-      credentialID: Buffer.from(regCred.id).toString("base64url"),
-      credentialPublicKey: Buffer.from(regCred.publicKey).toString("base64"),
-      counter: regCred.counter,
+      credentialID: regInfo.credentialID,
+      credentialPublicKey: Buffer.from(regInfo.credentialPublicKey).toString("base64"),
+      counter: regInfo.counter,
       transports: credential.response.transports,
       createdAt: new Date().toISOString(),
     }
