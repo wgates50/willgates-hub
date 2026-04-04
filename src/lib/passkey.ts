@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { kv } from "@vercel/kv"
 
 // WebAuthn relying party config

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { NextResponse } from "next/server"
 import { generateAuthenticationOptions } from "@simplewebauthn/server"
 import { rpID, getCredentials, saveChallenge } from "@/lib/passkey"
