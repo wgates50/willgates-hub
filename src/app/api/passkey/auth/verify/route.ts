@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       expectedOrigin: origin,
       expectedRPID: rpID,
       authenticator: {
-        credentialID: new Uint8Array(Buffer.from(matchingCred.credentialID, "base64url")),
+        credentialID: matchingCred.credentialID,
         credentialPublicKey: new Uint8Array(Buffer.from(matchingCred.credentialPublicKey, "base64")),
         counter: matchingCred.counter,
         transports: matchingCred.transports,
