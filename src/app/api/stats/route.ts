@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server"
 
+export const dynamic = "force-dynamic"
+
 const VERCEL_TOKEN = process.env.VERCEL_TOKEN
 const TEAM_ID = process.env.VERCEL_TEAM_ID || "team_OuODA23GunZTZvhNNMQ2IDYP"
 
