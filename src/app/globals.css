@@ -65,28 +65,86 @@
 ::-webkit-scrollbar-thumb { background: hsl(var(--muted-foreground) / 0.15); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.3); }
 
-/* ── Widget cards ── */
+/* ═══════════════════════════════════════════
+   WIDGET CARDS — thick accent, reactive glow
+   ═══════════════════════════════════════════ */
 .widget-card {
+  --widget-accent: hsl(var(--primary));
   position: relative;
   background: hsl(var(--card));
   border: 1px solid hsl(var(--border));
   border-radius: var(--radius);
   overflow: hidden;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Lift + glow on hover */
 .widget-card:hover {
-  border-color: hsl(var(--primary) / 0.2);
-  box-shadow: 0 4px 24px -4px hsl(var(--primary) / 0.06), 0 0 0 1px hsl(var(--primary) / 0.05);
+  transform: translateY(-2px);
+  border-color: hsl(var(--border));
+  box-shadow:
+    0 8px 30px -8px hsl(var(--background) / 0.5),
+    0 0 0 1px hsl(var(--border));
 }
-.widget-card::before {
-  content: "";
+.dark .widget-card:hover {
+  box-shadow:
+    0 8px 30px -8px rgba(0, 0, 0, 0.5),
+    0 0 0 1px hsl(var(--border));
+}
+
+/* Left accent bar — 3px, rounds with card, brightens on hover */
+.widget-accent-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  opacity: 0.5;
+  border-radius: var(--radius) 0 0 var(--radius);
+  transition: opacity 0.3s ease, width 0.3s ease, box-shadow 0.3s ease;
+  z-index: 2;
+}
+.widget-card:hover .widget-accent-bar {
+  opacity: 0.85;
+  width: 4px;
+  box-shadow: 0 0 12px 1px var(--widget-accent, hsl(var(--primary) / 0.3));
+}
+
+/* Top shimmer line — subtle top edge */
+.widget-top-shimmer {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.12), transparent);
-  z-index: 1;
+  opacity: 0.15;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+.widget-card:hover .widget-top-shimmer {
+  opacity: 0.35;
+}
+
+/* Inner glow overlay on hover */
+.widget-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    ellipse at 0% 0%,
+    var(--widget-accent, hsl(var(--primary) / 0.05)) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+.widget-card:hover::after {
+  opacity: 0.08;
+}
+.dark .widget-card:hover::after {
+  opacity: 0.06;
 }
 
 /* ── Noise background ── */
@@ -101,16 +159,20 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ── Interactive shortcut cards ── */
+/* ═══════════════════════════════════
+   INTERACTIVE SHORTCUT CARDS
+   ═══════════════════════════════════ */
 .shortcut-card {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .shortcut-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px -6px hsl(var(--primary) / 0.1);
+  transform: translateY(-4px);
+  box-shadow:
+    0 10px 24px -8px hsl(var(--primary) / 0.1),
+    0 4px 8px -4px hsl(var(--primary) / 0.05);
 }
 .shortcut-card:active {
-  transform: translateY(-1px) scale(0.98);
+  transform: translateY(-1px) scale(0.97);
 }
 
 /* ── Interactive link rows ── */
@@ -119,16 +181,45 @@
   cursor: pointer;
 }
 .interactive-row:hover {
-  background: hsl(var(--accent) / 0.5);
-  transform: translateX(2px);
+  background: hsl(var(--accent) / 0.6);
+  transform: translateX(3px);
 }
 .interactive-row:active {
   transform: translateX(1px) scale(0.995);
 }
 
+/* ═══════════════════════════════════
+   STAT CARDS — colored hover glow
+   ═══════════════════════════════════ */
+.stat-card {
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -6px var(--stat-color, hsl(var(--primary) / 0.15));
+}
+.stat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    var(--stat-color, hsl(var(--primary) / 0.06)) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+.stat-card:hover::before {
+  opacity: 1;
+}
+
 /* ── Stat counter animation ── */
 @keyframes count-up {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .stat-value {
@@ -137,8 +228,8 @@
 
 /* ── Pulse dot ── */
 @keyframes soft-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
 }
 .pulse-dot {
   animation: soft-pulse 2s ease-in-out infinite;
@@ -146,27 +237,29 @@
 
 /* ── Fade in ── */
 @keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-in {
-  animation: fade-in-up 0.35s ease-out forwards;
+  animation: fade-in-up 0.4s ease-out forwards;
 }
 
 /* ── Staggered children ── */
 .stagger-children > * {
-  animation: fade-in-up 0.3s ease-out forwards;
+  animation: fade-in-up 0.35s ease-out forwards;
   opacity: 0;
 }
-.stagger-children > *:nth-child(1) { animation-delay: 0.03s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.06s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.09s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.12s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.15s; }
-.stagger-children > *:nth-child(6) { animation-delay: 0.18s; }
-.stagger-children > *:nth-child(7) { animation-delay: 0.21s; }
+.stagger-children > *:nth-child(1) { animation-delay: 0.04s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.08s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.12s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.16s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.20s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.24s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.28s; }
 
-/* ── Glow on hover ── */
+/* ═══════════════════════════════════
+   GLOW ON HOVER — border-style glow
+   ═══════════════════════════════════ */
 .glow-on-hover {
   position: relative;
   transition: all 0.25s ease;
@@ -178,7 +271,7 @@
   border-radius: inherit;
   opacity: 0;
   transition: opacity 0.25s ease;
-  background: linear-gradient(135deg, hsl(var(--primary) / 0.1), transparent, hsl(var(--primary) / 0.05));
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.12), transparent, hsl(var(--primary) / 0.06));
   pointer-events: none;
   z-index: 0;
 }
@@ -186,7 +279,21 @@
   opacity: 1;
 }
 
-/* ── react-grid-layout ── */
+/* ═══════════════════════════════════
+   CALENDAR — today highlight
+   ═══════════════════════════════════ */
+.calendar-today {
+  background: hsl(var(--primary) / 0.04);
+  border-left: 2px solid hsl(var(--primary) / 0.3);
+  border-radius: 0 6px 6px 0;
+}
+.calendar-today:hover {
+  background: hsl(var(--primary) / 0.07);
+}
+
+/* ═══════════════════════════════════
+   react-grid-layout overrides
+   ═══════════════════════════════════ */
 .react-grid-layout {
   position: relative;
   transition: height 200ms ease;
@@ -206,8 +313,10 @@
   transition: none;
   z-index: 3;
   will-change: transform;
-  opacity: 0.9;
-  box-shadow: 0 20px 50px -10px hsl(var(--background) / 0.8), 0 0 0 1px hsl(var(--primary) / 0.15);
+  opacity: 0.92;
+  box-shadow:
+    0 24px 60px -12px hsl(var(--background) / 0.8),
+    0 0 0 2px hsl(var(--primary) / 0.2);
   border-radius: var(--radius);
 }
 .react-grid-item > .widget-container {
@@ -215,8 +324,8 @@
   height: 100%;
 }
 .react-grid-placeholder {
-  background: hsl(var(--primary) / 0.06);
-  border: 2px dashed hsl(var(--primary) / 0.2);
+  background: hsl(var(--primary) / 0.08);
+  border: 2px dashed hsl(var(--primary) / 0.25);
   border-radius: var(--radius);
   opacity: 1;
   transition-duration: 100ms;
@@ -232,14 +341,14 @@
   opacity: 0;
   transition: opacity 150ms;
 }
-.react-grid-item:hover .react-resizable-handle { opacity: 0.4; }
+.react-grid-item:hover .react-resizable-handle { opacity: 0.5; }
 .react-resizable-handle::after {
   content: "";
   position: absolute;
   right: 5px;
   bottom: 5px;
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-right: 2px solid hsl(var(--muted-foreground) / 0.4);
   border-bottom: 2px solid hsl(var(--muted-foreground) / 0.4);
 }

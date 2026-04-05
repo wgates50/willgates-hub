@@ -38,14 +38,14 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-border/40 bg-card/80 backdrop-blur-xl transition-all duration-200",
+        "fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-border/40 bg-card/90 backdrop-blur-xl transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
         collapsed ? "w-[60px]" : "w-[220px]"
       )}
     >
       {/* Logo + collapse toggle */}
       <div className="flex h-12 items-center justify-between border-b border-border/30 px-3">
         <Link href="/dashboard" className="flex items-center gap-2.5">
-          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-blue-600 text-primary-foreground text-[10px] font-bold shadow-md shadow-primary/20">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-blue-600 text-primary-foreground text-[11px] font-bold shadow-lg shadow-primary/25 transition-shadow hover:shadow-primary/40">
             W
           </div>
           {!collapsed && (

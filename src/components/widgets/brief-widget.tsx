@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { WidgetWrapper } from "./widget-wrapper"
-import { Newspaper, RefreshCw, Sun, Cloud, CloudRain } from "lucide-react"
+import { Newspaper, RefreshCw } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface BriefData {
@@ -28,7 +28,6 @@ export function BriefWidget() {
       })
       .then(setBrief)
       .catch(() => {
-        // Generate a local brief if API fails
         const hour = new Date().getHours()
         const greeting =
           hour < 12
@@ -77,34 +76,34 @@ export function BriefWidget() {
       headerActions={
         <button
           onClick={fetchBrief}
-          className="p-1.5 rounded-md text-muted-foreground hover:bg-accent/60 hover:text-foreground transition-colors"
+          className="p-1.5 rounded-lg text-muted-foreground hover:bg-accent/60 hover:text-foreground transition-colors"
         >
-          <RefreshCw className={`h-3 w-3 ${loading ? "animate-spin" : ""}`} />
+          <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
         </button>
       }
     >
       <ScrollArea className="h-full">
         {loading ? (
-          <div className="space-y-3 animate-pulse">
-            <div className="h-4 w-3/4 rounded bg-muted/40" />
-            <div className="h-3 w-1/2 rounded bg-muted/30" />
-            <div className="h-3 w-2/3 rounded bg-muted/30" />
+          <div className="space-y-4 animate-pulse">
+            <div className="h-4 w-3/4 rounded-lg bg-muted/40" />
+            <div className="h-3 w-1/2 rounded-lg bg-muted/30" />
+            <div className="h-3 w-2/3 rounded-lg bg-muted/30" />
           </div>
         ) : brief ? (
-          <div className="space-y-3.5">
+          <div className="space-y-4">
             {brief.sections.map((section, idx) => (
               <div key={section.title} className={idx > 0 ? "pt-1" : ""}>
-                <h4 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+                <h4 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">
                   {section.title}
                 </h4>
                 {section.items.length > 0 ? (
-                  <div className="space-y-1">
+                  <div className="space-y-1.5">
                     {section.items.map((item, i) => (
                       <div
                         key={i}
-                        className="text-[13px] text-foreground/80 flex items-start gap-2 py-0.5"
+                        className="interactive-row text-[13px] text-foreground/80 flex items-start gap-2.5 py-1 px-1.5 -mx-1.5 rounded-lg"
                       >
-                        <span className="mt-[7px] h-1 w-1 rounded-full bg-primary/50 shrink-0" />
+                        <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-primary/50 shrink-0" />
                         <span className="leading-relaxed">{item}</span>
                       </div>
                     ))}
@@ -118,9 +117,9 @@ export function BriefWidget() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-6 text-muted-foreground text-sm">
-            <Newspaper className="h-6 w-6 mx-auto mb-2 opacity-30" />
-            <p className="text-xs">Brief will appear here</p>
+          <div className="text-center py-8 text-muted-foreground text-sm">
+            <Newspaper className="h-8 w-8 mx-auto mb-2 opacity-30" />
+            <p className="text-[12px]">Brief will appear here</p>
           </div>
         )}
       </ScrollArea>

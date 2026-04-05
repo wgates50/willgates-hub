@@ -110,11 +110,11 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-3 animate-fade-in">
-      {/* Compact header */}
-      <div className="flex items-center justify-between">
+      {/* Header */}
+      <div className="flex items-center justify-between pb-1">
         <div className="flex items-baseline gap-3">
-          <h1 className="text-lg font-bold tracking-tight">{greeting}</h1>
-          <span className="text-[12px] text-muted-foreground/50">
+          <h1 className="text-xl font-bold tracking-tight">{greeting}</h1>
+          <span className="text-[13px] text-muted-foreground/40 font-medium">
             {new Date().toLocaleDateString("en-GB", {
               weekday: "short",
               day: "numeric",
@@ -122,32 +122,32 @@ export default function DashboardPage() {
             })}
           </span>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={toggleTheme}
-            className="p-1.5 rounded-lg text-muted-foreground/50 hover:text-foreground/70 hover:bg-accent/40 transition-colors"
+            className="p-2 rounded-xl text-muted-foreground/40 hover:text-foreground/70 hover:bg-accent/50 transition-all"
             title={dark ? "Light mode" : "Dark mode"}
           >
-            {dark ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
+            {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
           <button
             onClick={() => setLocked(!locked)}
-            className={`p-1.5 rounded-lg transition-all ${
+            className={`p-2 rounded-xl transition-all ${
               locked
-                ? "text-muted-foreground/50 hover:text-foreground/70 hover:bg-accent/40"
-                : "bg-primary/10 text-primary"
+                ? "text-muted-foreground/40 hover:text-foreground/70 hover:bg-accent/50"
+                : "bg-primary/10 text-primary shadow-sm shadow-primary/10"
             }`}
             title={locked ? "Unlock layout" : "Lock layout"}
           >
-            {locked ? <Lock className="h-3.5 w-3.5" /> : <Unlock className="h-3.5 w-3.5" />}
+            {locked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
           </button>
           {!locked && (
             <button
               onClick={resetLayout}
-              className="p-1.5 rounded-lg text-muted-foreground/50 hover:text-foreground/70 hover:bg-accent/40 transition-colors"
+              className="p-2 rounded-xl text-muted-foreground/40 hover:text-foreground/70 hover:bg-accent/50 transition-all"
               title="Reset layout"
             >
-              <RotateCcw className="h-3.5 w-3.5" />
+              <RotateCcw className="h-4 w-4" />
             </button>
           )}
         </div>
