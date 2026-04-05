@@ -72,12 +72,6 @@ export function PublicHeader() {
           >
             Home
           </Link>
-          <Link
-            href="/apps"
-            className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent"
-          >
-            Apps
-          </Link>
 
           {status === "loading" ? (
             <div className="h-8 w-8 rounded-full bg-muted animate-pulse ml-2" />

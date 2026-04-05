@@ -20,5 +20,8 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/settings/:path*"],
+  // Protected routes: dashboard, settings, and the apps listing page
+  // Note: /apps/:slug paths are handled by next.config.js rewrites
+  // and are NOT protected — they proxy to the public Vercel apps
+  matcher: ["/dashboard/:path*", "/settings/:path*", "/apps"],
 }

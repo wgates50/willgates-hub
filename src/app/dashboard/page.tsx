@@ -33,7 +33,7 @@ function getStoredLayout(): Layout[] | null {
   }
 }
 
-// Extend window for in-memory layout storage (no localStorage)
+// Extend window for in-memory layout storage
 declare global {
   interface Window {
     __dashboardLayout?: Layout[]
@@ -87,7 +87,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">{greeting}</h1>
-          <p className="text-muted-foreground text-sm mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             {new Date().toLocaleDateString("en-GB", {
               weekday: "long",
               day: "numeric",
@@ -98,27 +98,27 @@ export default function DashboardPage() {
         </div>
         <div className="flex items-center gap-2">
           <Button
-            variant="ghost"
+            variant={locked ? "ghost" : "default"}
             size="sm"
             onClick={() => setLocked(!locked)}
-            className="gap-2"
+            className="gap-2 h-8"
           >
             {locked ? (
               <>
-                <Lock className="h-4 w-4" />
-                <span className="hidden sm:inline">Locked</span>
+                <Lock className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline text-xs">Locked</span>
               </>
             ) : (
               <>
-                <Unlock className="h-4 w-4" />
-                <span className="hidden sm:inline">Editing</span>
+                <Unlock className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline text-xs">Editing</span>
               </>
             )}
           </Button>
           {!locked && (
-            <Button variant="ghost" size="sm" onClick={resetLayout} className="gap-2">
-              <RotateCcw className="h-4 w-4" />
-              <span className="hidden sm:inline">Reset</span>
+            <Button variant="ghost" size="sm" onClick={resetLayout} className="gap-2 h-8">
+              <RotateCcw className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline text-xs">Reset</span>
             </Button>
           )}
         </div>
@@ -137,6 +137,7 @@ export default function DashboardPage() {
         onLayoutChange={onLayoutChange}
         draggableHandle=".widget-drag-handle"
         compactType="vertical"
+        useCSSTransforms={true}
       >
         {widgets
           .filter((w) => w.visible)
