@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, createContext, useContext } from "react"
+import { useState, useEffect, useCallback, createContext, useContext } from "react"
 import { Sidebar } from "./sidebar"
 
 interface SidebarContextType {
@@ -20,15 +20,24 @@ export function useSidebar() {
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(true)
 
+  // Tell react-grid-layout to recalculate when sidebar changes
+  const handleSetCollapsed = useCallback((v: boolean) => {
+    setCollapsed(v)
+    // WidthProvider listens for window resize to recalculate grid width
+    setTimeout(() => {
+      window.dispatchEvent(new Event("resize"))
+    }, 310) // after the 300ms CSS transition
+  }, [])
+
   return (
-    <SidebarContext.Provider value={{ collapsed, setCollapsed }}>
+    <SidebarContext.Provider value={{ collapsed, setCollapsed: handleSetCollapsed }}>
       <div className="min-h-screen noise-bg">
         <Sidebar />
         <main
           className="transition-all duration-300"
           style={{ paddingLeft: collapsed ? 60 : 220 }}
         >
-          <div className="p-5 max-w-[1440px]">{children}</div>
+          <div className="px-5 py-4">{children}</div>
         </main>
       </div>
     </SidebarContext.Provider>

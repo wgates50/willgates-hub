@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 220 20% 97%;
     --foreground: 224 71% 4%;
     --card: 0 0% 100%;
     --card-foreground: 224 71% 4%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71% 4%;
-    --primary: 220 90% 56%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 9% 46%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 220 14% 96%;
+    --primary: 220 85% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 94%;
+    --secondary-foreground: 220 9% 30%;
+    --muted: 220 14% 94%;
+    --muted-foreground: 220 9% 40%;
+    --accent: 220 14% 92%;
     --accent-foreground: 224 71% 4%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 220 90% 56%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 220 85% 50%;
     --radius: 0.75rem;
   }
 
@@ -46,7 +46,6 @@
     --border: 225 15% 13%;
     --input: 225 15% 13%;
     --ring: 217 91% 60%;
-    --widget-glow: 217 91% 60%;
   }
 }
 
@@ -60,34 +59,24 @@
   }
 }
 
-/* ── Scrollbar styling ── */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.2);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.35);
-}
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--muted-foreground) / 0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.3); }
 
-/* ── Premium card effects ── */
+/* ── Widget cards ── */
 .widget-card {
   position: relative;
   background: hsl(var(--card));
   border: 1px solid hsl(var(--border));
   border-radius: var(--radius);
   overflow: hidden;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
 }
 .widget-card:hover {
-  border-color: hsl(var(--border) / 0.8);
-  box-shadow: 0 0 0 1px hsl(var(--border) / 0.3), 0 8px 32px -8px hsl(var(--background) / 0.6);
+  border-color: hsl(var(--primary) / 0.2);
+  box-shadow: 0 4px 24px -4px hsl(var(--primary) / 0.06), 0 0 0 1px hsl(var(--primary) / 0.05);
 }
 .widget-card::before {
   content: "";
@@ -96,33 +85,105 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.15), transparent);
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.12), transparent);
   z-index: 1;
 }
 
-/* ── Gradient text ── */
-.gradient-text {
-  background: linear-gradient(135deg, hsl(var(--foreground)), hsl(var(--muted-foreground)));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ── Subtle noise texture ── */
-.noise-bg {
-  position: relative;
-}
+/* ── Noise background ── */
+.noise-bg { position: relative; }
 .noise-bg::after {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.015;
+  inset: 0;
+  opacity: 0.012;
   z-index: 0;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Interactive shortcut cards ── */
+.shortcut-card {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.shortcut-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px -6px hsl(var(--primary) / 0.1);
+}
+.shortcut-card:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* ── Interactive link rows ── */
+.interactive-row {
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+.interactive-row:hover {
+  background: hsl(var(--accent) / 0.5);
+  transform: translateX(2px);
+}
+.interactive-row:active {
+  transform: translateX(1px) scale(0.995);
+}
+
+/* ── Stat counter animation ── */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stat-value {
+  animation: count-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Pulse dot ── */
+@keyframes soft-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.pulse-dot {
+  animation: soft-pulse 2s ease-in-out infinite;
+}
+
+/* ── Fade in ── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in-up 0.35s ease-out forwards;
+}
+
+/* ── Staggered children ── */
+.stagger-children > * {
+  animation: fade-in-up 0.3s ease-out forwards;
+  opacity: 0;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.03s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.06s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.09s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.12s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.18s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.21s; }
+
+/* ── Glow on hover ── */
+.glow-on-hover {
+  position: relative;
+  transition: all 0.25s ease;
+}
+.glow-on-hover::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.1), transparent, hsl(var(--primary) / 0.05));
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-on-hover:hover::after {
+  opacity: 1;
 }
 
 /* ── react-grid-layout ── */
@@ -130,7 +191,6 @@
   position: relative;
   transition: height 200ms ease;
 }
-
 .react-grid-item {
   transition: all 200ms ease;
   transition-property: left, top, width, height;
@@ -147,27 +207,21 @@
   z-index: 3;
   will-change: transform;
   opacity: 0.9;
-  box-shadow: 0 25px 60px -12px hsl(var(--background) / 0.8), 0 0 0 1px hsl(var(--primary) / 0.2);
+  box-shadow: 0 20px 50px -10px hsl(var(--background) / 0.8), 0 0 0 1px hsl(var(--primary) / 0.15);
   border-radius: var(--radius);
 }
-
-/* Ensure widget containers fill their grid cell */
 .react-grid-item > .widget-container {
   width: 100%;
   height: 100%;
 }
-
-/* Placeholder shown during drag */
 .react-grid-placeholder {
-  background: hsl(var(--primary) / 0.08);
-  border: 2px dashed hsl(var(--primary) / 0.25);
+  background: hsl(var(--primary) / 0.06);
+  border: 2px dashed hsl(var(--primary) / 0.2);
   border-radius: var(--radius);
   opacity: 1;
   transition-duration: 100ms;
   z-index: 2;
 }
-
-/* Resize handle */
 .react-resizable-handle {
   position: absolute;
   width: 20px;
@@ -178,9 +232,7 @@
   opacity: 0;
   transition: opacity 150ms;
 }
-.react-grid-item:hover .react-resizable-handle {
-  opacity: 0.4;
-}
+.react-grid-item:hover .react-resizable-handle { opacity: 0.4; }
 .react-resizable-handle::after {
   content: "";
   position: absolute;
@@ -188,32 +240,6 @@
   bottom: 5px;
   width: 5px;
   height: 5px;
-  border-right: 2px solid hsl(var(--muted-foreground) / 0.5);
-  border-bottom: 2px solid hsl(var(--muted-foreground) / 0.5);
-}
-
-/* ── Animate in ── */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in-up 0.4s ease-out forwards;
-}
-
-/* ── Shortcut hover glow ── */
-.shortcut-card {
-  position: relative;
-  transition: all 0.2s ease;
-}
-.shortcut-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px -8px hsl(var(--background) / 0.5);
+  border-right: 2px solid hsl(var(--muted-foreground) / 0.4);
+  border-bottom: 2px solid hsl(var(--muted-foreground) / 0.4);
 }

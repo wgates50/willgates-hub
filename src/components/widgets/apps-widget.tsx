@@ -8,40 +8,30 @@ export function AppsWidget() {
   return (
     <WidgetWrapper
       title="My Apps"
-      icon={<Grid3X3 className="h-4 w-4 text-indigo-400" />}
+      icon={<Grid3X3 className="h-3.5 w-3.5 text-indigo-400" />}
       accentColor="hsl(239, 84%, 67%)"
       headerActions={
         <a
           href="/apps"
-          className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground transition-colors px-2 py-1 rounded-md hover:bg-accent/50"
+          className="flex items-center gap-0.5 text-[10px] text-muted-foreground/50 hover:text-foreground/70 transition-colors px-1.5 py-0.5 rounded-md hover:bg-accent/40"
         >
-          View all
-          <ArrowUpRight className="h-3 w-3" />
+          All <ArrowUpRight className="h-2.5 w-2.5" />
         </a>
       }
     >
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 stagger-children">
         {PROJECTS.map((project) => (
           <a
             key={project.name}
             href={getAppUrl(project.slug)}
-            className="group flex flex-col items-center gap-2 rounded-lg border border-border/40 p-3 hover:border-border/70 hover:bg-accent/30 transition-all shortcut-card"
+            className="shortcut-card group flex flex-col items-center gap-1 rounded-lg border border-border/30 p-2.5 hover:border-border/60"
           >
-            <div
-              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg ${project.iconBg}`}
-            >
+            <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-base transition-transform group-hover:scale-110 ${project.iconBg}`}>
               {project.emoji}
             </div>
-            <div className="text-center min-w-0 w-full">
-              <p className="text-[12px] font-medium truncate group-hover:text-primary transition-colors">
-                {project.name}
-              </p>
-              {project.status === "building" && (
-                <span className="inline-flex items-center mt-0.5 text-[9px] font-medium text-amber-400 bg-amber-500/10 rounded-full px-1.5 py-0.5">
-                  Building
-                </span>
-              )}
-            </div>
+            <p className="text-[10px] font-medium truncate w-full text-center text-muted-foreground/60 group-hover:text-foreground/70 transition-colors">
+              {project.name}
+            </p>
           </a>
         ))}
       </div>
