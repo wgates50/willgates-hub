@@ -13,13 +13,12 @@ import {
   GRID_MARGIN,
 } from "@/lib/dashboard-config"
 import { CalendarWidget } from "@/components/widgets/calendar-widget"
+import { WhatsOnWidget } from "@/components/widgets/whats-on-widget"
 import { BriefWidget } from "@/components/widgets/brief-widget"
-import { TasksWidget } from "@/components/widgets/tasks-widget"
 import { StatsWidget } from "@/components/widgets/stats-widget"
 import { AppsWidget } from "@/components/widgets/apps-widget"
 import { QuickLinksWidget } from "@/components/widgets/quicklinks-widget"
 import { Lock, Unlock, RotateCcw } from "lucide-react"
-import { Button } from "@/components/ui/button"
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -33,7 +32,6 @@ function getStoredLayout(): Layout[] | null {
   }
 }
 
-// Extend window for in-memory layout storage
 declare global {
   interface Window {
     __dashboardLayout?: Layout[]
@@ -64,10 +62,10 @@ export default function DashboardPage() {
     switch (widgetId) {
       case "calendar":
         return <CalendarWidget />
+      case "whats-on":
+        return <WhatsOnWidget />
       case "brief":
         return <BriefWidget />
-      case "tasks":
-        return <TasksWidget />
       case "stats":
         return <StatsWidget />
       case "apps":
@@ -82,12 +80,12 @@ export default function DashboardPage() {
   const greeting = getGreeting(session?.user?.name || "Will")
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 animate-fade-in">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">{greeting}</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-[13px] text-muted-foreground/70 mt-1">
             {new Date().toLocaleDateString("en-GB", {
               weekday: "long",
               day: "numeric",
@@ -96,30 +94,35 @@ export default function DashboardPage() {
             })}
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant={locked ? "ghost" : "default"}
-            size="sm"
+        <div className="flex items-center gap-1.5">
+          <button
             onClick={() => setLocked(!locked)}
-            className="gap-2 h-8"
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+              locked
+                ? "text-muted-foreground hover:text-foreground hover:bg-accent/60"
+                : "bg-primary/10 text-primary border border-primary/20"
+            }`}
           >
             {locked ? (
               <>
-                <Lock className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline text-xs">Locked</span>
+                <Lock className="h-3 w-3" />
+                <span className="hidden sm:inline">Locked</span>
               </>
             ) : (
               <>
-                <Unlock className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline text-xs">Editing</span>
+                <Unlock className="h-3 w-3" />
+                <span className="hidden sm:inline">Editing</span>
               </>
             )}
-          </Button>
+          </button>
           {!locked && (
-            <Button variant="ghost" size="sm" onClick={resetLayout} className="gap-2 h-8">
-              <RotateCcw className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline text-xs">Reset</span>
-            </Button>
+            <button
+              onClick={resetLayout}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-accent/60 transition-colors"
+            >
+              <RotateCcw className="h-3 w-3" />
+              <span className="hidden sm:inline">Reset</span>
+            </button>
           )}
         </div>
       </div>

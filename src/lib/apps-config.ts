@@ -6,7 +6,9 @@ export interface AppProject {
   externalUrl: string
   github?: string
   color: string
-  widgetColor: string
+  gradientFrom: string
+  gradientTo: string
+  iconBg: string
   emoji: string
   status: "live" | "building" | "planned"
   tech: string[]
@@ -19,9 +21,11 @@ export const PROJECTS: AppProject[] = [
     description: "Event calendar for London happenings",
     longDescription:
       "Aggregates events across London venues, festivals, and pop-ups. Powered by weekly automated scans.",
-    externalUrl: "https://whats-on-london.vercel.app",
+    externalUrl: "https://whats-on-london-wgates50s-projects.vercel.app",
     color: "from-rose-500/20 to-rose-600/5",
-    widgetColor: "bg-rose-500/10 text-rose-500 border-rose-500/20",
+    gradientFrom: "rose-500",
+    gradientTo: "pink-500",
+    iconBg: "bg-rose-500/15",
     emoji: "🎭",
     status: "live",
     tech: ["Next.js", "Vercel", "Cowork Automation"],
@@ -32,9 +36,11 @@ export const PROJECTS: AppProject[] = [
     description: "Collaborative album listening & rating",
     longDescription:
       "A social app for listening clubs — pick albums, rate tracks, discuss with friends. Built with Supabase auth and real-time features.",
-    externalUrl: "https://album-club.vercel.app",
+    externalUrl: "https://album-club-gamma.vercel.app",
     color: "from-violet-500/20 to-violet-600/5",
-    widgetColor: "bg-violet-500/10 text-violet-500 border-violet-500/20",
+    gradientFrom: "violet-500",
+    gradientTo: "purple-500",
+    iconBg: "bg-violet-500/15",
     emoji: "💿",
     status: "live",
     tech: ["Next.js", "Supabase", "Tailwind"],
@@ -45,9 +51,11 @@ export const PROJECTS: AppProject[] = [
     description: "Spotify new release tracker",
     longDescription:
       "Tracks new releases from your favourite Spotify artists. Never miss an album drop or single release.",
-    externalUrl: "https://musicbox.vercel.app",
+    externalUrl: "https://musicbox-mu.vercel.app",
     color: "from-emerald-500/20 to-emerald-600/5",
-    widgetColor: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
+    gradientFrom: "emerald-500",
+    gradientTo: "green-500",
+    iconBg: "bg-emerald-500/15",
     emoji: "🎵",
     status: "live",
     tech: ["Next.js", "Spotify API", "Vercel"],
@@ -55,12 +63,14 @@ export const PROJECTS: AppProject[] = [
   {
     name: "TaskFlow",
     slug: "taskflow",
-    description: "Personal Asana alternative",
+    description: "Personal project management tool",
     longDescription:
       "A lightweight project management tool built exactly how you want it. Kanban boards, custom sections, and clean design.",
-    externalUrl: "https://taskflow.vercel.app",
+    externalUrl: "https://taskflow-lilac-eta.vercel.app",
     color: "from-blue-500/20 to-blue-600/5",
-    widgetColor: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+    gradientFrom: "blue-500",
+    gradientTo: "indigo-500",
+    iconBg: "bg-blue-500/15",
     emoji: "✅",
     status: "building",
     tech: ["Next.js", "Vercel", "React DnD"],
@@ -71,9 +81,11 @@ export const PROJECTS: AppProject[] = [
     description: "Link click analytics",
     longDescription:
       "Simple analytics for tracking link clicks across your projects. Lightweight alternative to full analytics suites.",
-    externalUrl: "https://click-tracker.vercel.app",
+    externalUrl: "https://click-tracker-silk.vercel.app",
     color: "from-amber-500/20 to-amber-600/5",
-    widgetColor: "bg-amber-500/10 text-amber-500 border-amber-500/20",
+    gradientFrom: "amber-500",
+    gradientTo: "orange-500",
+    iconBg: "bg-amber-500/15",
     emoji: "📊",
     status: "live",
     tech: ["Next.js", "Vercel"],
@@ -84,9 +96,11 @@ export const PROJECTS: AppProject[] = [
     description: "Release & event countdown tracker",
     longDescription:
       "Track upcoming releases, events, and deadlines with countdown timers and notifications.",
-    externalUrl: "https://upcoming.vercel.app",
+    externalUrl: "https://pdevs-upcoming.vercel.app",
     color: "from-cyan-500/20 to-cyan-600/5",
-    widgetColor: "bg-cyan-500/10 text-cyan-500 border-cyan-500/20",
+    gradientFrom: "cyan-500",
+    gradientTo: "teal-500",
+    iconBg: "bg-cyan-500/15",
     emoji: "📅",
     status: "live",
     tech: ["Next.js", "Vercel"],

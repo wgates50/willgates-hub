@@ -1,6 +1,5 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { GripVertical } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -10,6 +9,7 @@ interface WidgetWrapperProps {
   children: React.ReactNode
   className?: string
   headerActions?: React.ReactNode
+  accentColor?: string
 }
 
 export function WidgetWrapper({
@@ -18,25 +18,39 @@ export function WidgetWrapper({
   children,
   className,
   headerActions,
+  accentColor,
 }: WidgetWrapperProps) {
   return (
-    <Card className={cn("h-full flex flex-col overflow-hidden border-border/50", className)}>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 pt-4 px-4 shrink-0">
-        <div className="flex items-center gap-2">
-          <div
-            className="widget-drag-handle cursor-grab active:cursor-grabbing p-1 -ml-1 rounded hover:bg-accent transition-colors"
-            onMouseDown={(e) => e.stopPropagation()}
-          >
-            <GripVertical className="h-4 w-4 text-muted-foreground" />
+    <div className={cn("widget-card h-full flex flex-col", className)}>
+      {/* Accent top line */}
+      {accentColor && (
+        <div
+          className="absolute top-0 left-0 right-0 h-[2px] z-10"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${accentColor}, transparent)`,
+            opacity: 0.5,
+          }}
+        />
+      )}
+
+      {/* Header */}
+      <div className="flex items-center justify-between space-y-0 px-4 pt-3.5 pb-2.5 shrink-0">
+        <div className="flex items-center gap-2.5">
+          <div className="widget-drag-handle cursor-grab active:cursor-grabbing p-0.5 -ml-0.5 rounded opacity-40 hover:opacity-100 transition-opacity">
+            <GripVertical className="h-3.5 w-3.5 text-muted-foreground" />
           </div>
           {icon}
-          <CardTitle className="text-sm font-semibold">{title}</CardTitle>
+          <h3 className="text-[13px] font-semibold tracking-tight text-foreground/90">{title}</h3>
         </div>
-        {headerActions}
-      </CardHeader>
-      <CardContent className="flex-1 overflow-auto px-4 pb-4 pt-0 min-h-0">
+        {headerActions && (
+          <div className="flex items-center gap-1">{headerActions}</div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 overflow-auto px-4 pb-3.5 pt-0 min-h-0">
         {children}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
